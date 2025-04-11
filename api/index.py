@@ -38,3 +38,6 @@ def predict():
                            sepal_width=sepal_width,
                            petal_length=petal_length, 
                            petal_width=petal_width)
+
+if __name__ == '__main__':
+    app.run(debug=True,port=5001)
