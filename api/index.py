@@ -3,16 +3,27 @@ import pickle
 import numpy as np
 import os
 
-app = Flask(__name__, template_folder="../templates", static_folder="../static")
+# app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
-# Load the model and label encoder
-model_path = os.path.join(os.path.dirname(__file__), "../savemodel.sav")
-encoder_path = os.path.join(os.path.dirname(__file__), "../label_encoder.pkl")
+# # Load the model and label encoder
+# model_path = os.path.join(os.path.dirname(__file__), "../savemodel.sav")
+# encoder_path = os.path.join(os.path.dirname(__file__), "../label_encoder.pkl")
 
-with open(model_path, 'rb') as model_file:
+# with open(model_path, 'rb') as model_file:
+#     model = pickle.load(model_file)
+# with open(encoder_path, 'rb') as encoder_file:
+#     label_encoder = pickle.load(encoder_file)
+
+app = Flask(__name__)
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(base_dir, 'savemodel.sav'), 'rb') as model_file:
     model = pickle.load(model_file)
-with open(encoder_path, 'rb') as encoder_file:
+
+with open(os.path.join(base_dir, 'label_encoder.pkl'), 'rb') as encoder_file:
     label_encoder = pickle.load(encoder_file)
+
 
 @app.route('/')
 def home():
