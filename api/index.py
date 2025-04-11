@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request
 import pickle
 import numpy as np
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 # Load the model and label encoder
-with open('savemodel.sav', 'rb') as model_file:
+model_path = os.path.join(os.path.dirname(__file__), "../savemodel.sav")
+encoder_path = os.path.join(os.path.dirname(__file__), "../label_encoder.pkl")
+
+with open(model_path, 'rb') as model_file:
     model = pickle.load(model_file)
-with open('label_encoder.pkl', 'rb') as encoder_file:
+with open(encoder_path, 'rb') as encoder_file:
     label_encoder = pickle.load(encoder_file)
 
 @app.route('/')
@@ -29,8 +33,8 @@ def predict():
     # Decode the prediction
     result = label_encoder.inverse_transform([encoded_result])[0]
 
-    return render_template('index.html', result=result, sepal_length=sepal_length,
-                           sepal_width=sepal_width, petal_length=petal_length, petal_width=petal_width)
-
-if __name__ == '__main__':
-    app.run(debug=True,port=5001)
+    return render_template('index.html', result=result, 
+                           sepal_length=sepal_length,
+                           sepal_width=sepal_width,
+                           petal_length=petal_length, 
+                           petal_width=petal_width)
