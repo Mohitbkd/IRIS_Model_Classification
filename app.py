@@ -14,14 +14,16 @@ import os
 # with open(encoder_path, 'rb') as encoder_file:
 #     label_encoder = pickle.load(encoder_file)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
+model_dir = os.path.join(base_dir, 'model')
 
-with open(os.path.join(base_dir, 'savemodel.sav'), 'rb') as model_file:
+
+with open(os.path.join(model_dir, 'savemodel.sav'), 'rb') as model_file:
     model = pickle.load(model_file)
 
-with open(os.path.join(base_dir, 'label_encoder.pkl'), 'rb') as encoder_file:
+with open(os.path.join(model_dir, 'label_encoder.pkl'), 'rb') as encoder_file:
     label_encoder = pickle.load(encoder_file)
 
 
